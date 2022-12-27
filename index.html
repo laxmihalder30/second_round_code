@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div id = "show"></div>
+</head>
+<body>
+<script>
+let employee = [
+{name:"laxmi",age:21, designation:"developer", joining:"29/12/2022"},
+{name:"neetu",age:20, designation:"js developer", joining:"01/12/2020"},
+{name:"gunnu",age:24, designation:"java developer", joining:"23/09/2028"},
+{name:"rahul",age:23, designation:"DBA", joining:"10/08/2017"},
+{name:"kartik",age:28, designation:"engineer", joining:"10/10/2022"},
+{name:"ajay",age:30, designation:"GDA", joining:"05/06/2014"}
+];
+
+function showTable(){
+const arr =  employee.map((ele) => {
+let str = '<tr>'
+      str += '<td>' +ele.name+ '</td>'
+      str += '<td>' +ele.age+ '</td>'
+      str += '<td>' +ele.designation+ '</td>'
+      str += '<td>' +ele.joining+ '</td>'
+      str += '</tr>' 
+return str;
+})
+let header = '<tr>'
+      header += '<td onclick = "sorting(0)"> Name </td>'
+      header += '<td onclick = "sorting(1)"> Age </td>'
+      header += '<td onclick = "sorting(2)"> Designation </td>'
+      header += '<td onclick = "sorting(3)"> Joining </td>'
+      header += '</tr>'
+let html = '<table>' +header+arr.join("")+ '</table>'
+let element = document.getElementById("show")
+element.innerHTML = html;
+}
+
+showTable();
+
+function sorting(col){
+if(col==0){
+employee.sort(sortByName)
+}
+else if(col==1){
+employee.sort(sortByAge)
+}
+else if(col==2){
+employee.sort(sortByDesignation)
+}
+else{
+employee.sort(sortByJoining)
+}
+showTable();
+}
+
+function sortByName(name1,name2){
+return name1.name.localeCompare(name2.name)
+}
+
+function sortByAge(age1,age2){
+return age1.age - age2.age
+}
+
+function sortByDesignation(d1,d2){
+return d1.designation.localeCompare(d2.designation)
+}
+
+function sortByJoining(date1,date2){
+return convertDate(date1.joining) - convertDate(date2.joining)
+}
+
+
+function convertDate(ddmmyy){
+let obj = new Date();
+const [day,month,year] = ddmmyy.split("/")
+obj.setYear(+year),
+obj.setMonth(+month),
+obj.setDate(day);
+
+return obj;
+}
+
+
+
+
+</script>
+</body>
+</html>

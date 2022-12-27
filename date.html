@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <h1>Current time</h1>                      
+    <div id="Date"></div>
+    <button onclick="clearInterval(curr)">click me</button>
+</head>
+<body>                                                
+    <script>
+     var curr = setTimeout(current,3000)
+        function current(){
+        var date = new Date();
+        var current_date = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+        var cuurent_time = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+        var Date_Time = current_date + " " + cuurent_time;
+        setInterval(current,1000)
+        document.getElementById("Date").innerHTML = Date_Time;
+        
+        }
+    </script>
+</body>
+</html>
