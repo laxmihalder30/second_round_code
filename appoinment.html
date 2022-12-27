@@ -1,1200 +1,148 @@
-<!DOCTYPE html>
 <html>
-
 <head>
-    <title>
-        appointment_website
-    </title>
+<title>
+appointment_website
+</title>
 </head>
 <style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
+.table1{
+border:1px solid;
+border-collapse:collapse;
 
-    }
+}
+.td1{
+border:1px solid;
+font-size:20px;
+margin:10px;                                                      
+padding:5px;
 
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
+background-color:#00FFFF;
+}
+.th1{
+border:1px solid;
+background-color:black;
+font-size:20px;
+color:white;
+margin:15px;
+padding:5px
 
-        background-color: #00FFFF;
-    }
-
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
-
-    body {
-        background-color: #87CEFA;
-    }
+}
+body{
+background-color:#87CEFA;
+}
 </style>
-
 <body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
+<h1>Appointment</h1>
+enter a name:<input type="text" id="name" placeholder="name">
+<br>
 
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
+<br>
+start time:<input type="datetime-local" id="start" placeholder="hh:mm">
+<br>
+end time :<input type="datetime-local" id="end" placeholder="hh:mm">
+<br>
+<button id="btn" style="background-color:yellow;color:red;">Add Details</button>
+<br>
+<div id="show"> </div>
 </body>
 <script>
 
-    const arr = []
+const arr=[]
 
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
+const show=document.getElementById("show")
+const btn=document.getElementById("btn")
+btn.addEventListener("click", ()=>{
+const name=document.getElementById("name").value
+const start=document.getElementById("start").value
+const end=document.getElementById("end").value
 
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
+const st={}
+st.name=name
+st.start=start
+st.end=end
 
-        }
 
-        arr.sort((arr1, arr2) => {
+arr.push(st)
 
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
+arr.sort((arr1,arr2)=>{
+console.log(arr1)
 
-            console.log("")
+return arr1.start.localeCompare(arr2.start)
+})
+console.log(arr)
 
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
+showData(arr)
+})
 
 
 
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
+function showData(arr){
+let arr1=arr.map(ele=>{
+let str="<tr>"
+str+='<td class="td1">'+ele.name+'</td>'
 
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
+str+='<td class="td1">'+ele.start+'</td>'
+str+='<td class="td1">'+ele.end+'</td>'
+str+='<tr>'
+return str
+})
+let header='<tr>'
+header+='<th class="th1">Name</th>'
 
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
+header+='<th class="th1">Start Time</th>'
+header+='<th class="th1">End Time</th>'
+header+='</tr>'
+let html='<table class="table1">'+header+arr1.join("")+'</table>'
 
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
+return show.innerHTML=html
+}
 
 
+showData(arr)
+function convertDate(yymmdd){
+let obj=new Date()
 
+let [year,month,day]=yymmdd.split("/")
+
+obj.setYear(+year)
+obj.setMonth(+month)
+obj.setDate(day)
+console.log(obj.setDate(day))
+console.log(obj)
+return obj
+}
+function convert(yymmdd){
+let obj=new Date()
+
+let [hour,minute]=yymmdd.split(":")
+
+obj.setHours(+hour)
+obj.setMinutes(minute)
+
+return obj
+}
+
+
+           
 
 
 
 </script>
-
 </html>
-<!DOCTYPE html>
-<html>
 
-<head>
-    <title>
-        appointment_website
-    </title>
-</head>
-<style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
 
-    }
 
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
 
-        background-color: #00FFFF;
-    }
 
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    body {
-        background-color: #87CEFA;
-    }
-</style>
 
-<body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
 
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
-</body>
-<script>
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-    const arr = []
 
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
 
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
 
-        }
-
-        arr.sort((arr1, arr2) => {
-
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
-
-            console.log("")
-
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
-
-
-
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
-
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
-
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
-
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
-
-
-
-
-
-
-</script>
-
-</html>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>
-        appointment_website
-    </title>
-</head>
-<style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
-
-    }
-
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
-
-        background-color: #00FFFF;
-    }
-
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
-
-    body {
-        background-color: #87CEFA;
-    }
-</style>
-
-<body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
-
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
-</body>
-<script>
-
-    const arr = []
-
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
-
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
-
-        }
-
-        arr.sort((arr1, arr2) => {
-
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
-
-            console.log("")
-
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
-
-
-
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
-
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
-
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
-
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
-
-
-
-
-
-
-</script>
-
-</html>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>
-        appointment_website
-    </title>
-</head>
-<style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
-
-    }
-
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
-
-        background-color: #00FFFF;
-    }
-
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
-
-    body {
-        background-color: #87CEFA;
-    }
-</style>
-
-<body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
-
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
-</body>
-<script>
-
-    const arr = []
-
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
-
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
-
-        }
-
-        arr.sort((arr1, arr2) => {
-
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
-
-            console.log("")
-
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
-
-
-
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
-
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
-
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
-
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
-
-
-
-
-
-
-</script>
-
-</html>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>
-        appointment_website
-    </title>
-</head>
-<style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
-
-    }
-
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
-
-        background-color: #00FFFF;
-    }
-
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
-
-    body {
-        background-color: #87CEFA;
-    }
-</style>
-
-<body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
-
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
-</body>
-<script>
-
-    const arr = []
-
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
-
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
-
-        }
-
-        arr.sort((arr1, arr2) => {
-
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
-
-            console.log("")
-
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
-
-
-
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
-
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
-
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
-
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
-
-
-
-
-
-
-</script>
-
-</html>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>
-        appointment_website
-    </title>
-</head>
-<style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
-
-    }
-
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
-
-        background-color: #00FFFF;
-    }
-
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
-
-    body {
-        background-color: #87CEFA;
-    }
-</style>
-
-<body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
-
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
-</body>
-<script>
-
-    const arr = []
-
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
-
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
-
-        }
-
-        arr.sort((arr1, arr2) => {
-
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
-
-            console.log("")
-
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
-
-
-
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
-
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
-
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
-
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
-
-
-
-
-
-
-</script>
-
-</html>
-<!DOCTYPE html>
-<html>
-
-<head>
-    <title>
-        appointment_website
-    </title>
-</head>
-<style>
-    .table1 {
-        border: 1px solid;
-        border-collapse: collapse;
-
-    }
-
-    .td1 {
-        border: 1px solid;
-        font-size: 20px;
-        margin: 10px;
-        padding: 5px;
-
-        background-color: #00FFFF;
-    }
-
-    .th1 {
-        border: 1px solid;
-        background-color: black;
-        font-size: 20px;
-        color: white;
-        margin: 15px;
-        padding: 5px
-    }
-
-    body {
-        background-color: #87CEFA;
-    }
-</style>
-
-<body>
-    <h1>Appointment</h1>
-    enter a name:<input type="text" id="name" placeholder="name">
-    <br>
-
-    <br>
-    start time:<input type="datetime-local" id="start" placeholder="hh:mm">
-    <br>
-    end time :<input type="datetime-local" id="end" placeholder="hh:mm">
-    <br>
-    <button id="btn" style="background-color:yellow;color:red;">Add Details</button>
-    <br>
-    <div id="show"> </div>
-</body>
-<script>
-
-    const arr = []
-
-    const show = document.getElementById("show")
-    const btn = document.getElementById("btn")
-    btn.addEventListener("click", () => {
-        const name = document.getElementById("name").value
-        const start = document.getElementById("start").value
-        const end = document.getElementById("end").value
-
-        const st = {}
-        st.name = name
-        st.start = start
-        st.end = end
-        var isCancel = false;;
-        arr.push(st)
-        if (arr.length > 1) {
-            arr.forEach((el, index) => {
-                if (arr.length - 1 != index) {
-                    if (new Date(start).getTime() >= new Date(el.start) && new Date(end).getTime() <= new Date(el.end)) {
-                        updateData(index)
-                    }
-                    
-                }
-            })
-
-        }
-
-        arr.sort((arr1, arr2) => {
-
-            return arr1.start.localeCompare(arr2.start)
-        })
-        console.log(arr, 'array data')
-        showData(arr)
-    })
-    function updateData(index) {
-        console.log('update array', arr)
-        if (confirm("Do you want to update appointment") == true) {
-
-            console.log("")
-
-            isCancel = false;
-            console.log('update array');
-
-            arr.splice(index, 1)
-        
-            
-
-        } else {
-
-            console.log("else ", arr, "index ", index)
-            arr.splice(index + 1, 1)
-            return;
-        }
-    }
-
-    function removeField() {
-        const name = document.getElementById("name").innerHTML = ''
-        const start = document.getElementById("start").innerHTML = ''
-        const end = document.getElementById("end").innerHTML = ''
-    }
-
-
-
-    function showData(arr) {
-        let arr1 = arr.map(ele => {
-            let str = "<tr>"
-            str += '<td class="td1">' + ele.name + '</td>'
-
-            str += '<td class="td1">' + ele.start + '</td>'
-            str += '<td class="td1">' + ele.end + '</td>'
-            str += '<tr>'
-            return str
-        })
-        let header = '<tr>'
-        header += '<th class="th1">Name</th>'
-
-        header += '<th class="th1">Start Time</th>'
-        header += '<th class="th1">End Time</th>'
-        header += '</tr>'
-        let html = '<table class="table1">' + header + arr1.join("") + '</table>'
-
-        return show.innerHTML = html
-    }
-
-
-    showData(arr)
-    function convertDate(yymmdd) {
-        let obj = new Date()
-
-        let [year, month, day] = yymmdd.split("/")
-
-        obj.setYear(+year)
-        obj.setMonth(+month)
-        obj.setDate(day)
-        console.log(obj.setDate(day))
-        console.log(obj)
-        return obj
-    }
-    function convert(yymmdd) {
-        let obj = new Date()
-
-        let [hour, minute] = yymmdd.split(":")
-
-        obj.setHours(+hour)
-        obj.setMinutes(minute)
-
-        return obj
-    }
-
-
-
-
-
-
-</script>
-
-</html>
 <!DOCTYPE html>
 <html>
 
